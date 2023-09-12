@@ -34,4 +34,5 @@ export const LimitedContainer = styled.div`
   padding: 22px;
   display: flex;
   justify-content: center;
+  flex-direction: column;
 `;
