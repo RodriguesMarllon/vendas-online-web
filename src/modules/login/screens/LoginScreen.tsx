@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 
 import Button from '../../../shared/buttons/button/button';
@@ -12,10 +13,10 @@ import {
 } from '../styles/loginScreen.styles';
 
 const LoginScreen = () => {
-  const [username, setUserName] = useState('');
+  const [email, setUserName] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleUserName = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(event.target.value);
   };
 
@@ -23,8 +24,22 @@ const LoginScreen = () => {
     setPassword(event.target.value);
   };
 
-  const handleLogin = () => {
-    alert(`usuário: ${username}, senha: ${password}`);
+  const handleLogin = async () => {
+    await axios({
+      method: 'post',
+      url: 'http://127.0.0.1:8080/auth',
+      data: {
+        email: email,
+        password: password,
+      },
+    })
+      .then((result) => {
+        alert(`Fez login${result.data.accessToken}`);
+        return result.data;
+      })
+      .catch(() => {
+        alert('Usuário ou senha inválido!');
+      });
   };
 
   return (
@@ -35,7 +50,7 @@ const LoginScreen = () => {
           <TitleLogin level={2} type="secondary">
             LOGIN
           </TitleLogin>
-          <Input title="Usuário" margin="32px 0px 0px" onChange={handleUserName} value={username} />
+          <Input title="Usuário" margin="32px 0px 0px" onChange={handleEmail} value={email} />
           <Input
             type="password"
             title="Senha"
