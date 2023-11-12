@@ -1,19 +1,24 @@
 import './main.css';
 
+import type { Router as RemixRouter } from '@remix-run/router';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { createBrowserRouter, RouteObject, RouterProvider } from 'react-router-dom';
 
-import App from './App.tsx';
+import { loginRoutes } from './modules/login/routes';
 
-// Verifique a existência do elemento com o ID 'root'
-const rootElement = document.getElementById('root');
+const mainRoutes: RouteObject[] = [
+  {
+    path: '/',
+    element: <div>Tela Principal</div>,
+    errorElement: <div>Página não encontrada</div>,
+  },
+];
 
-if (rootElement) {
-  ReactDOM.createRoot(rootElement).render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>,
-  );
-} else {
-  console.error("Elemento 'root' não encontrado no documento.");
-}
+const router: RemixRouter = createBrowserRouter([...mainRoutes, ...loginRoutes]);
+
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>,
+);

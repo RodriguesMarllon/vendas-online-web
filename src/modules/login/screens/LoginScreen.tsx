@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 
 import Button from '../../../shared/buttons/button/button';
+import SVGHome from '../../../shared/icons/SVGHome';
 import Input from '../../../shared/inputs/input/input';
 import {
   BackgroundImage,
